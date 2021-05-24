@@ -1,9 +1,14 @@
+import "./../styles/todo.css";
+
+
 const todo = (props)=>{
     return(
         <div className="todo">
-            <h1>{props.todo}</h1>
-            <button onClick={props.todoRemover}>Delete</button>
-            <button onClick={props.todoEditor}>Edit</button>
+            <div className="todo-title">{props.todo}</div>
+            <div>
+            <button className= "todo-btn" onClick={props.todoRemover}>Delete</button>
+            <button className= "todo-btn" onClick={props.todoEditor}>Edit</button>
+            </div>
         </div>
     );
 }

@@ -1,6 +1,7 @@
 import './App.css';
 import AddTodo from "./components/add-todo";
 import RenderTodos from "./components/render-todo";
+import UpdateModal from "./components/update-modal";
 import { useState, useEffect } from "react";
 
 function App() {
@@ -8,6 +9,11 @@ function App() {
   const [todosData, settodosData] = useState({
     todos : null,
     todo : ""
+  })
+  const [editTodo , setEditTodo] = useState({
+    isEdit : false,
+    selectedTodo:"",
+    selectedIndex : null
   })
   
   useEffect(() => {
@@ -65,25 +71,72 @@ function App() {
 
   const todoEditor =(index)=>{
     const allTodos = window.localStorage.getItem("todos");
-    const tempTodos = {...todosData};
     
     if(allTodos !== null){
       const parsedTodos = JSON.parse(allTodos);
+      setEditTodo({
+        isEdit: true,
+        selectedTodo: parsedTodos[index].todo,
+        selectedIndex : index
+      })
     }
-    // window.localStorage.setItem("todos",JSON.stringify(tempTodos.todos))
-    // settodosData(tempTodos);
   }
 
+  const modalCloser=()=>{
+    setEditTodo({
+      ...editTodo,
+      isEdit:false,
+    })
+  }
+  const todoUpdater=(e)=>{
+    setEditTodo({
+      ...editTodo,
+      selectedTodo : e.target.value
+    })
+  }
+
+  const setUpdate=(e)=>{
+    e.stopPropagation();
+    const allTodos = window.localStorage.getItem("todos");
+    const tempEditTodo = {...editTodo};
+
+    if(allTodos !== null){
+      const parsedTodos = JSON.parse(allTodos);
+      parsedTodos[tempEditTodo.selectedIndex] = {todo : tempEditTodo.selectedTodo};
+      window.localStorage.setItem("todos", JSON.stringify(parsedTodos));
+      
+      setEditTodo({
+        isEdit: false,
+        selectedTodo: "",
+        selectedIndex : null
+      })
+      settodosData({
+        ...todosData,
+        todos : parsedTodos
+      });
+    }
+  }
 
   return (
     <div className="App">
       <AddTodo changeHandler = {(e)=>changeHandler(e)} todoAdder={todoAdder} inputValue={todosData.todo}></AddTodo>
+      <div className="todos-title">Todos</div>
       {
         todosData.todos !== null 
         ?
         <RenderTodos todos = {todosData.todos} todoRemover={todoRemover} todoEditor={todoEditor}></RenderTodos>
         :
         null
+      }
+      {
+      editTodo.isEdit ?
+        <UpdateModal 
+        todo = {editTodo.selectedTodo} 
+        closeModal={modalCloser}
+        todoUpdater={(e)=>todoUpdater(e)}
+        setUpdate={(e)=>setUpdate(e)}
+        ></UpdateModal>
+      :null
       }
     </div>
   );
