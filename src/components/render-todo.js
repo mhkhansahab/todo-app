@@ -6,10 +6,11 @@ const renderTodo  = (props)=>{
         <div className="todos-container">
            {
                data.map((value, index)=>{
-                   return <Todo todo={value.todo} 
+                   return <Todo todo={value} 
                    key={index} 
                    todoRemover={()=>props.todoRemover(index)}
                    todoEditor={()=>props.todoEditor(index)}
+                   todoSelector={()=>props.todoSelector(index)}
                    ></Todo>
                })
            }

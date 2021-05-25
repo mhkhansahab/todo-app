@@ -43,7 +43,7 @@ function App() {
       }else{
         var todos = tempTodos.todos;
       }
-      const todo = {todo : tempTodos.todo};
+      const todo = {todo : tempTodos.todo, isCompleted: false};
       todos.push(todo);
       tempTodos.todos = todos;
       tempTodos.todo="";
@@ -81,7 +81,20 @@ function App() {
       })
     }
   }
-
+  const todoSelector = (index)=>{
+    const allTodos = window.localStorage.getItem("todos");
+    
+    if(allTodos !== null){
+      const parsedTodos = JSON.parse(allTodos);
+      parsedTodos[index].isCompleted = true;
+      console.log(parsedTodos);
+      window.localStorage.setItem("todos",JSON.stringify(parsedTodos));
+      settodosData({
+        ...todosData,
+        todos: parsedTodos
+      });
+    }
+  } 
   const modalCloser=()=>{
     setEditTodo({
       ...editTodo,
@@ -95,6 +108,7 @@ function App() {
     })
   }
 
+
   const setUpdate=(e)=>{
     e.stopPropagation();
     const allTodos = window.localStorage.getItem("todos");
@@ -102,7 +116,7 @@ function App() {
 
     if(allTodos !== null){
       const parsedTodos = JSON.parse(allTodos);
-      parsedTodos[tempEditTodo.selectedIndex] = {todo : tempEditTodo.selectedTodo};
+      parsedTodos[tempEditTodo.selectedIndex] = {...parsedTodos[tempEditTodo.selectedIndex], todo : tempEditTodo.selectedTodo};
       window.localStorage.setItem("todos", JSON.stringify(parsedTodos));
       
       setEditTodo({
@@ -124,7 +138,12 @@ function App() {
       {
         todosData.todos !== null 
         ?
-        <RenderTodos todos = {todosData.todos} todoRemover={todoRemover} todoEditor={todoEditor}></RenderTodos>
+        <RenderTodos 
+          todos = {todosData.todos} 
+          todoRemover={todoRemover} 
+          todoEditor={todoEditor}
+          todoSelector={todoSelector}
+          ></RenderTodos>
         :
         null
       }
