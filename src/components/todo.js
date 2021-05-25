@@ -3,11 +3,10 @@ import "./../styles/todo.css";
 
 const todo = (props)=>{
     return(
-        <div className="todo">
+        <div className="todo" onDoubleClick={props.todoSelector}>
                 <div 
                 className="todo-title" 
                 style={props.todo.isCompleted ? {"textDecoration": "line-through"}:{"textDecoration": "none"}}
-                onDoubleClick={props.todoSelector}
                 >
                 {props.todo.todo}</div>
                 <div>

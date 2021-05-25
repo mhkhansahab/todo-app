@@ -86,8 +86,7 @@ function App() {
     
     if(allTodos !== null){
       const parsedTodos = JSON.parse(allTodos);
-      parsedTodos[index].isCompleted = true;
-      console.log(parsedTodos);
+      parsedTodos[index].isCompleted = !parsedTodos[index].isCompleted;
       window.localStorage.setItem("todos",JSON.stringify(parsedTodos));
       settodosData({
         ...todosData,
