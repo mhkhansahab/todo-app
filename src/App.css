@@ -35,3 +35,10 @@ input{
   font-size: 40px;
   font-weight: bold;
 }
+
+.message{
+  background-color: red;
+  margin: 20px;
+  border-radius: 20px;
+  padding: 5px 0;
+}

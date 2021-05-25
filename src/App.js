@@ -135,6 +135,7 @@ function App() {
     <div className="App">
       <AddTodo changeHandler = {(e)=>changeHandler(e)} todoAdder={todoAdder} inputValue={todosData.todo}></AddTodo>
       <div className="todos-title">Todos</div>
+      <div className="message">Double tap Todo to mark it as a completed task</div>
       {
         todosData.todos !== null 
         ?
