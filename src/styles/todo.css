@@ -1,12 +1,17 @@
 .todo{
+    position: relative;
     background-color: #ee6c4d;
     margin: 20px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
     justify-content: space-evenly;
     flex-wrap: wrap;
     overflow:scroll;
+    cursor: pointer;
+    
+}
+.todo, .over-div{
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
 }
 .todo::-webkit-scrollbar {
     display: none;
@@ -18,11 +23,30 @@
     text-overflow: ellipsis;
     margin-right: auto;
     margin-left: 20px;
-    cursor: pointer;
 }
 .todo-btn{
     margin:10px;
 }
 .todo-title{
     font-size: 20px;
+}
+
+.over-div{
+    z-index: 12;
+    position: absolute;
+    justify-content: center;
+    width: 200px;
+    height: 0px;
+    background-color: white;
+    color: #ee6c4d;
+    font-weight: bold;
+    opacity: 0;
+    transition: all .5s ease;
+    visibility: hidden;
+}
+
+.todo:hover .over-div{
+    height: 35px;
+    opacity: 1;
+    visibility: visible;
 }

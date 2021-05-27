@@ -71,7 +71,6 @@ function App() {
 
   const todoEditor =(index)=>{
     const allTodos = window.localStorage.getItem("todos");
-    
     if(allTodos !== null){
       const parsedTodos = JSON.parse(allTodos);
       setEditTodo({
@@ -134,7 +133,7 @@ function App() {
     <div className="App">
       <AddTodo changeHandler = {(e)=>changeHandler(e)} todoAdder={todoAdder} inputValue={todosData.todo}></AddTodo>
       <div className="todos-title">Todos</div>
-      <div className="message">Double tap Todo to mark it as a completed task</div>
+      <div className="message">Tap Todo to Mark Complete/Incomplete</div>
       {
         todosData.todos !== null 
         ?
